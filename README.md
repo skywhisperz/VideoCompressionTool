@@ -23,8 +23,7 @@ Download FFMPEG from [here](https://ffmpeg.org/download.html).<br><br>
 
 # How to fix FFMPEG not being recognized as a valid program
 
-### Windows<br>
-**Adding FFMPEG to PATH**<br><br>
+### Windows<br><br>
 1.- Download FFMPEG.<br><br>
 2.- Open Windows search and search for "View advanced system settings"<br><br>
 <img width="764" height="385" alt="image" src="https://github.com/user-attachments/assets/aa621053-a6ff-4046-b939-9a6cb9fd0040" />
