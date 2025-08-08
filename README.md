@@ -23,7 +23,7 @@ Download FFMPEG from [here](https://ffmpeg.org/download.html).<br><br>
 
 # How to fix FFMPEG not being recognized as a valid program
 
-### Windows<br><br>
+### Windows<br>
 1.- Download FFMPEG.<br><br>
 2.- Open Windows search and search for "View advanced system settings"<br><br>
 <img width="764" height="385" alt="image" src="https://github.com/user-attachments/assets/aa621053-a6ff-4046-b939-9a6cb9fd0040" />
@@ -36,7 +36,7 @@ Download FFMPEG from [here](https://ffmpeg.org/download.html).<br><br>
 
 5.- Click on "New", and type in the place where FFMPEG's binaries are stored. Then, click OK.<br><br>
 <img width="541" height="512" alt="image" src="https://github.com/user-attachments/assets/313eac97-bd4c-4d0c-9101-3f5eb2904458" /><br>
-(Tip: the official FFMPEG downloads place their binaries under a folder named Bin in the downloaded folder. For example, C:\Users\me\Downloads\ffmpeg\Bin. I recommend placing this in a more general place, like in the program files folder.)
+(Tip: the official FFMPEG downloads place their binaries under a folder named Bin in the downloaded folder. For example, `C:\Users\me\Downloads\ffmpeg\Bin`. I recommend placing this in a more general place, like in the program files folder.)
 
 Afterwards, just close and reopen any terminal instances and run the script. If you followed the steps correctly, it should work properly now.
 
