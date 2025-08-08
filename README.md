@@ -26,16 +26,16 @@ Download FFMPEG from [here](https://ffmpeg.org/download.html).<br><br>
 ### Windows<br>
 **Adding FFMPEG to PATH**<br><br>
 1.- Download FFMPEG.<br><br>
-1.- Open Windows search and search for "View advanced system settings"<br><br>
+2.- Open Windows search and search for "View advanced system settings"<br><br>
 <img width="764" height="385" alt="image" src="https://github.com/user-attachments/assets/aa621053-a6ff-4046-b939-9a6cb9fd0040" />
 
-2.- Click on the "Environment variables" button<br><br>
+3.- Click on the "Environment variables" button<br><br>
 <img width="312" height="173" alt="image" src="https://github.com/user-attachments/assets/8b872c88-9cf2-427b-8c69-9a37c131f503" />
 
-3.- Double click in the "Path" variable in the "System variables" menu<br><br>
+4.- Double click in the "Path" variable in the "System variables" menu<br><br>
 <img width="582" height="236" alt="image" src="https://github.com/user-attachments/assets/032e0992-914f-4ebc-9141-cd755938e0c0" />
 
-4.- Click on "New", and type in the place where FFMPEG's binaries are stored. Then, click OK.<br><br>
+5.- Click on "New", and type in the place where FFMPEG's binaries are stored. Then, click OK.<br><br>
 <img width="541" height="512" alt="image" src="https://github.com/user-attachments/assets/313eac97-bd4c-4d0c-9101-3f5eb2904458" /><br>
 (Tip: the official FFMPEG downloads place their binaries under a folder named Bin in the downloaded folder. For example, C:\Users\me\Downloads\ffmpeg\Bin. I recommend placing this in a more general place, like in the program files folder.)
 
