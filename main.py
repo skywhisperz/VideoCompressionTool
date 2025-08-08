@@ -1,0 +1,121 @@
+import os
+import subprocess
+
+def main():
+    appVersion = "1.0"
+    textSeparator = "=================================================="
+    sourceAndDest = None
+    print(f"Welcome to Video Compression Tool {appVersion}\n{textSeparator}")
+    print("NOTE: YOU HAVE TO INSTALL FFMPEG YOURSELF. ADD THE FFMPEG BIN FOLDER TO YOUR PATH ENVIRONMENT VARIABLE, OR USE A THIRD PARTY INSTALLER TO DO IT AUTOMATICALLY FOR YOU. OTHERWISE, THE PROGRAM WILL NOT WORK.\nIn order to test this, the program will run the command \"ffmpeg -version\". If the command fails or states that \"'ffmpeg' is not recognized as an internal or external command, operable program or batch file\", then you do not have FFMPEG installed.")
+    input("Press Enter to run the command.\n")
+    subprocess.run(["ffmpeg", "-version"])
+    didFFMPEGWork = input("\n\nDid the command show a lot of options and text? (Y/n) > ")
+    didFFMPEGWork = didFFMPEGWork.lower()
+    if (didFFMPEGWork == "y"):
+        print("Good! You have FFMPEG installed. Let's start.")
+    elif (didFFMPEGWork == "n"):
+        print("Download this installer to install FFMPEG: https://getffmpeg.org/\nOr, if you don't trust it, download the FFMPEG binaries directly from https://ffmpeg.org/download.html and add them to your PATH environment variable.")
+        input("Press Enter to exit.\n")
+        exit(0)
+    else:
+        print(f"Invalid option: {didFFMPEGWork}. Interpreting invalid answer as 'no'.")
+        print("Download this installer to install FFMPEG: https://getffmpeg.org/\nOr, if you don't trust it, download the FFMPEG binaries directly from https://ffmpeg.org/download.html and add them to your PATH environment variable.")
+        input("Press Enter to exit.\n")
+        exit(0)
+    while True:
+        sourceAndDest = obtainSourceAndDestination()
+        if (sourceAndDest == 1):
+            pass
+        elif (sourceAndDest == 2):
+            print("\nSorry about that. Let's try again.\n")
+        elif (sourceAndDest == 3):
+            print("\nNot a valid choice; please select one of the valid choices (y / n).\nInterpreting invalid answer as 'no'. Let's try that again.\n")
+        elif (sourceAndDest == 4):
+            pass
+
+def obtainSourceAndDestination():
+    videoToCompress = input("What video would you like to compress? > ")
+    if (not videoToCompress.find("\"") == -1):
+        videoToCompress = videoToCompress[1:-1]
+    if (not os.path.isfile(videoToCompress)):
+        print("\nNot a valid file. Please insert a path to a real file! The file must end with a valid video file extension.\n")
+        return 1
+    destinationToDump = input("Where should the compressed video be placed? > ")
+    if (not destinationToDump.find("\"") == -1):
+        destinationToDump = destinationToDump[1:-1]
+    if (not os.path.isdir(destinationToDump)):
+        print("\nThat directory doesn't exist. Please insert a valid directory. NOTE: DO NOT INSERT A FILE HERE. You will choose the output file name later, don't worry.\n")
+        yOrNDestQuestCreateDir = input("Would you like to create a directory with the name you provided? (Y/n) > ")
+        yOrNDestQuestCreateDir = yOrNDestQuestCreateDir.lower()
+        if (yOrNDestQuestCreateDir == "y"):
+            os.mkdir(destinationToDump)
+        elif (yOrNDestQuestCreateDir == "n"):
+            print("\nAlright, let's try that again.\n")
+            return 4
+        else:
+            return 3
+    yOrNSrcDestQuest = input(f"The source video is located in '{videoToCompress}', and the compressed output should be placed in '{destinationToDump}'. Is this correct? (Y/n) > ")
+    print("\nSource and destination accepted!\n")
+    yOrNSrcDestQuest = yOrNSrcDestQuest.lower()
+    if (yOrNSrcDestQuest == "y"):
+        print("Note: you can't use some special characters in file names, so keep filenames simple and short.\nInclude the file extension of the video (e.g.: .mp4, .mkv, .avi, etc.) you want at the end of the filename.\n")
+        while True:
+            videoNameOutput = setVideoName(videoToCompress, destinationToDump)
+            if (videoNameOutput == 1):
+                pass
+    elif (yOrNSrcDestQuest == "n"):
+        return 2
+    else:
+        return 3
+
+def setVideoName(src : str, dest : str):
+    unacceptableFilenameChars = ["\\", "/", ":", "*", "?", "\"", "<", ">", "|"]
+    videoName = input("What should the output video file be named? > ")
+    for unacceptableCharacter in unacceptableFilenameChars:
+        if (videoName.find(unacceptableCharacter) != -1):
+            print(f"\nFound \"{unacceptableCharacter}\" in the filename. This character is not allowed. Please try again.\n")
+            return 1
+    if (videoName.find(".") == -1 or videoName.endswith(".")):
+        print("\nCould not detect any file extension. Please try again.\n")
+        return 1
+    print("\nFilename accepted! Let's begin.\n")
+    while True:
+        basicQuestOutput = basicQuestionaire(src, dest, videoName)
+        if (basicQuestOutput == 15):
+            break
+        elif (basicQuestOutput == 1):
+            pass
+
+def basicQuestionaire(src1 : str, dest1 : str, fnm1 : str):
+    useEncoder265 = False
+    useCodec = "libx264"
+    crfLevel = int(input("Input compression level (CRF), which may range from 1 to 51. Lower values output better quality but compress the video less. A value of around 20 (or around 30, if using H.265) is recommended. > "))
+    if (crfLevel <= 0 or crfLevel >= 52):
+        print(f"\nInvalid CRF value. The CRF value may range from 1 to 51, but {crfLevel} was recieved.\n")
+        return 1
+    encoderType = input("Would you like to use the H.265 encoder for this video? (Y/n) > ")
+    encoderType = encoderType.lower()
+    if (encoderType == "y"):
+        useCodec = "libx265"
+        useEncoder265 = True
+    elif (encoderType == "n"):
+        pass
+    else:
+        print("\nNot a valid choice; please select one of the valid choices (y / n).\nInterpreting invalid answer as 'no'.\n")
+        encoderType = "n"
+    print(f"The following options will be used:\n\nCRF level: {crfLevel}\nUse high efficiency codec: {useEncoder265}\nInput file: {src1}\nOutput file: {fnm1} in {dest1}\n\nFull FFMPEG command preview:\nffmpeg -i {src1} -crf {crfLevel} -c:v {useCodec} {dest1}/{fnm1}")
+    input("Press Enter to begin!\n")
+    compress(src1, dest1, fnm1, crfLevel, encoderType)
+
+def compress(src : str, dest : str, fnm : str, crf : int, cdc : str):
+    useCodec = "libx264"
+    if (cdc == "y"):
+        useCodec = "libx265"
+    else:
+        pass
+    subprocess.run(['ffmpeg', '-i', src, '-crf', str(crf), '-c:v', useCodec, f'{dest}/{fnm}'])
+    input("Press Enter to exit.\n")
+    exit(0)
+
+if (__name__ == "__main__"):
+    main()
