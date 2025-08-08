@@ -1,7 +1,7 @@
 # VideoCompressionTool
-A tool I decided to make since I got tired of writing the same FFMPEG command over and over again, so I decided to automate it.
+A tool I decided to make since I got tired of writing the same FFMPEG command over and over again, so I decided to automate it.<br>
 
-The sole and only purpose of this utility is compressing videos. I use Discord a lot and they added their stupid 10MB upload limit which basically isn't enough for any kind of decent quality video, and online compression tools cost money for some reason.<br>
+The sole and only purpose of this utility is compressing videos. I use Discord a lot and they added their stupid 10MB upload limit which basically isn't enough for any kind of decent quality video, and online compression tools cost money for some reason.<br><br>
 
 
 **How to use?** <br>
@@ -23,8 +23,9 @@ Download FFMPEG from [here](https://ffmpeg.org/download.html).<br><br>
 
 # How to fix FFMPEG not being recognized as a valid program
 
-### Windows
-**Adding FFMPEG to PATH**
+### Windows<br>
+**Adding FFMPEG to PATH**<br><br>
+1.- Download FFMPEG.<br><br>
 1.- Open Windows search and search for "View advanced system settings"<br><br>
 <img width="764" height="385" alt="image" src="https://github.com/user-attachments/assets/aa621053-a6ff-4046-b939-9a6cb9fd0040" />
 
