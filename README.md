@@ -40,6 +40,8 @@ Download FFMPEG from [here](https://ffmpeg.org/download.html).<br><br>
 
 Afterwards, just close and reopen any terminal instances and run the script. If you followed the steps correctly, it should work properly now.
 
+**You could also** just put the ffmpeg.exe binary in the same folder where the script is currently in. I'm not sure though, I haven't tested that yet
+
 ### macOS
 
 No macOS support (yet)
