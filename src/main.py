@@ -35,13 +35,13 @@ def main():
 
 def obtainSourceAndDestination():
     videoToCompress = input("What video would you like to compress? > ")
-    if (not videoToCompress.find("\"") == -1):
+    if (not videoToCompress.find("\"") == -1 or not videoToCompress.find("\'")):
         videoToCompress = videoToCompress[1:-1]
     if (not os.path.isfile(videoToCompress)):
         print("\nNot a valid file. Please insert a path to a real file! The file must end with a valid video file extension.\n")
         return 1
     destinationToDump = input("Where should the compressed video be placed? > ")
-    if (not destinationToDump.find("\"") == -1):
+    if (not destinationToDump.find("\"") == -1 or not destinationToDump.find("\'")):
         destinationToDump = destinationToDump[1:-1]
     if (not os.path.isdir(destinationToDump)):
         print("\nThat directory doesn't exist. Please insert a valid directory. NOTE: DO NOT INSERT A FILE HERE. You will choose the output file name later, don't worry.\n")
