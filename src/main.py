@@ -1,27 +1,37 @@
 import os
 import subprocess
 
-def main():
-    appVersion = "1.0"
-    textSeparator = "=================================================="
-    sourceAndDest = None
-    print(f"Welcome to Video Compression Tool {appVersion}\n{textSeparator}")
-    print("NOTE: YOU HAVE TO INSTALL FFMPEG YOURSELF. ADD THE FFMPEG BIN FOLDER TO YOUR PATH ENVIRONMENT VARIABLE, OR USE A THIRD PARTY INSTALLER TO DO IT AUTOMATICALLY FOR YOU. OTHERWISE, THE PROGRAM WILL NOT WORK.\nIn order to test this, the program will run the command \"ffmpeg -version\". If the command fails or states that \"'ffmpeg' is not recognized as an internal or external command, operable program or batch file\", then you do not have FFMPEG installed.")
+def checkFFmpegExists():
+    if (os.path.isfile("_ffmpegcheck")):
+        print("FFmpeg is installed!")
+        return 0
+    print("Warning: this is a first time check that only runs the first time you run the script or if you delete the '_ffmpegcheck' file that is created after this check.")
+    input("Press Enter to begin.\n")
+    print("\n\nNOTE: YOU HAVE TO INSTALL FFMPEG YOURSELF. ADD THE FFMPEG BIN FOLDER TO YOUR PATH ENVIRONMENT VARIABLE, OR USE A THIRD PARTY INSTALLER TO DO IT AUTOMATICALLY FOR YOU. OTHERWISE, THE PROGRAM WILL NOT WORK.\nIn order to test this, the program will run the command \"ffmpeg -version\". If the command fails or states that \"'ffmpeg' is not recognized as an internal or external command, operable program or batch file\", then you do not have FFmpeg installed.")
     input("Press Enter to run the command.\n")
     subprocess.run(["ffmpeg", "-version"])
     didFFMPEGWork = input("\n\nDid the command show a lot of options and text? (Y/n) > ")
     didFFMPEGWork = didFFMPEGWork.lower()
     if (didFFMPEGWork == "y"):
-        print("Good! You have FFMPEG installed. Let's start.")
+        with open('_ffmpegcheck', 'w') as checkFile:
+            checkFile.write("FFmpeg exists! Yippee!")
+        print("Good! You have FFmpeg installed. Let's start.")
     elif (didFFMPEGWork == "n"):
-        print("Download this installer to install FFMPEG: https://getffmpeg.org/\nOr, if you don't trust it, download the FFMPEG binaries directly from https://ffmpeg.org/download.html and add them to your PATH environment variable.")
+        print("Download this installer to install FFmpeg: https://getffmpeg.org/\nOr, if you don't trust it, download the FFmpeg binaries directly from https://ffmpeg.org/download.html and add them to your PATH environment variable.")
         input("Press Enter to exit.\n")
         exit(0)
     else:
         print(f"Invalid option: {didFFMPEGWork}. Interpreting invalid answer as 'no'.")
-        print("Download this installer to install FFMPEG: https://getffmpeg.org/\nOr, if you don't trust it, download the FFMPEG binaries directly from https://ffmpeg.org/download.html and add them to your PATH environment variable.")
+        print("Download this installer to install FFmpeg: https://getffmpeg.org/\nOr, if you don't trust it, download the FFmpeg binaries directly from https://ffmpeg.org/download.html and add them to your PATH environment variable.")
         input("Press Enter to exit.\n")
         exit(0)
+
+def main():
+    appVersion = "1.0"
+    textSeparator = "=================================================="
+    sourceAndDest = None
+    print(f"Welcome to Video Compression Tool {appVersion}\n{textSeparator}")
+    checkFFmpegExists()
     while True:
         sourceAndDest = obtainSourceAndDestination()
         if (sourceAndDest == 1):
