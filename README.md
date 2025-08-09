@@ -43,12 +43,12 @@ Afterwards, just close and reopen any terminal instances and run the script. If 
 
 ### macOS
 
-**The script is coded for Windows. That means that the script may not work first try and you may need to adjust it so it works correctly on your computer. I'll make a macOS version soon.**<br><br>
+**The script is coded for Windows. That means that the script may not work first try and you may need to adjust it so it works correctly on your computer. I'll make a macOS version soon.**<br>
 
 1.- Download and install Python from the official Python website.<br><br>
 2.- Install FFmpeg through Homebrew (`brew install ffmpeg`). If you do not have Homebrew, install it from [here](https://brew.sh/).<br><br>
 3.- Run the script with `python3 VideoCompressionTool.py`, or `python3 main.py`.<br><br>
-4.- Compress your videos idk
+4.- Compress your videos idk<br><br>
 5.- Enjoy!
 
 ### Linux
