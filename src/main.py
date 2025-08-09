@@ -150,15 +150,19 @@ def basicQuestionaire(src1 : str, dest1 : str, fnm1 : str):
     
     print(f"The following options will be used:\n\nCRF level: {crfLevel}\nUse high efficiency codec: {useEncoder265}\nInput file: {src1}\nOutput file: {fnm1} in {dest1}\nAudio bitrate: {audioBitrate}\n\nFull FFMPEG command preview:\n{guessFfmpegCommandPrev(src1, dest1, fnm1, crfLevel, useCodec, audioBitrate)}")
     input("Press Enter to begin!\n")
-    compress(src1, dest1, fnm1, crfLevel, encoderType)
+    compress(src1, dest1, fnm1, crfLevel, encoderType, audioBitrate)
 
-def compress(src : str, dest : str, fnm : str, crf : int, cdc : str):
+def compress(src : str, dest : str, fnm : str, crf : int, cdc : str, abr : str):
     useCodec = "libx264"
     if (cdc == "y"):
         useCodec = "libx265"
     else:
         pass
-    subprocess.run(['ffmpeg', '-i', src, '-crf', str(crf), '-c:v', useCodec, f'{dest}/{fnm}'])
+
+    if (abr == "default"):
+        subprocess.run(['ffmpeg', '-i', src, '-crf', str(crf), '-c:v', useCodec, f'{dest}/{fnm}'])
+    else:
+        subprocess.run(['ffmpeg', '-i', src, '-crf', str(crf), '-c:v', useCodec, '-b:a', abr, f'{dest}/{fnm}'])
     input("Press Enter to exit.\n")
     exit(0)
 
