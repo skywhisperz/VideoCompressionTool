@@ -86,13 +86,16 @@ def setVideoName(src : str, dest : str):
         elif (basicQuestOutput == 1):
             pass
 
-def basicQuestionaire(src1 : str, dest1 : str, fnm1 : str):
-    useEncoder265 = False
-    useCodec = "libx264"
+def receiveCrf():
     crfLevel = int(input("Input compression level (CRF), which may range from 1 to 51. Lower values output better quality but compress the video less. A value of around 20 (or around 30, if using H.265) is recommended. > "))
     if (crfLevel <= 0 or crfLevel >= 52):
         print(f"\nInvalid CRF value. The CRF value may range from 1 to 51, but {crfLevel} was recieved.\n")
-        return 1
+        return -1
+    return crfLevel
+
+def receiveEncoder():
+    useEncoder265 = False
+    useCodec = "libx264"
     encoderType = input("Would you like to use the H.265 encoder for this video? (Y/n) > ")
     encoderType = encoderType.lower()
     if (encoderType == "y"):
@@ -103,7 +106,49 @@ def basicQuestionaire(src1 : str, dest1 : str, fnm1 : str):
     else:
         print("\nNot a valid choice; please select one of the valid choices (y / n).\nInterpreting invalid answer as 'no'.\n")
         encoderType = "n"
-    print(f"The following options will be used:\n\nCRF level: {crfLevel}\nUse high efficiency codec: {useEncoder265}\nInput file: {src1}\nOutput file: {fnm1} in {dest1}\n\nFull FFMPEG command preview:\nffmpeg -i {src1} -crf {crfLevel} -c:v {useCodec} {dest1}/{fnm1}")
+    return [useCodec, useEncoder265, encoderType]
+
+def receiveAudioBitrate():
+    audioBitrate = input("Set audio bitrate (leave empty for default) > ")
+    if (audioBitrate.isalpha()):
+        print("Invalid audio bitrate. Please try again.")
+        return "-1"
+    else:
+        if (not audioBitrate.strip()):
+            print("No input received, leaving at default!")
+            audioBitrate = "default"
+            return audioBitrate
+        else:
+            return audioBitrate
+    
+def guessFfmpegCommandPrev(src1, dest1, fnm1, crfLevel, useCodec, audioBitrate):
+    if (audioBitrate == "default"):
+        return f"ffmpeg -i {src1} -crf {crfLevel} -c:v {useCodec} {dest1}/{fnm1}"
+    else:
+        return f"ffmpeg -i {src1} -crf {crfLevel} -c:v {useCodec} -b:a {audioBitrate} {dest1}/{fnm1}"
+
+def basicQuestionaire(src1 : str, dest1 : str, fnm1 : str):
+
+    while True:
+        crfLevel = receiveCrf()
+        if (crfLevel == -1):
+            pass
+        else:
+            break
+
+    encoderListReceiver = receiveEncoder()
+    encoderType = encoderListReceiver[2]
+    useEncoder265 = encoderListReceiver[1]
+    useCodec = encoderListReceiver[0]
+
+    while True:
+        audioBitrate = receiveAudioBitrate()
+        if (audioBitrate == "-1"):
+            pass
+        else:
+            break
+    
+    print(f"The following options will be used:\n\nCRF level: {crfLevel}\nUse high efficiency codec: {useEncoder265}\nInput file: {src1}\nOutput file: {fnm1} in {dest1}\nAudio bitrate: {audioBitrate}\n\nFull FFMPEG command preview:\n{guessFfmpegCommandPrev(src1, dest1, fnm1, crfLevel, useCodec, audioBitrate)}")
     input("Press Enter to begin!\n")
     compress(src1, dest1, fnm1, crfLevel, encoderType)
 
