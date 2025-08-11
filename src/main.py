@@ -1,5 +1,6 @@
 import os
 import subprocess
+from classes import *
 
 def checkFFmpegExists():
     if (os.path.isfile("_ffmpegcheck")):
