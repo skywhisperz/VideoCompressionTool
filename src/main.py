@@ -2,6 +2,8 @@ import os
 import subprocess
 from classes import *
 
+compressVideo = VideoFile()
+
 def checkFFmpegExists():
     if (os.path.isfile("_ffmpegcheck")):
         print("FFmpeg is installed!")
